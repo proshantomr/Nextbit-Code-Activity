@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-const Accordion = ({ question, answer }) => {
-    const [isOpen, setIsOpen] = useState(false);
+import Faq from './Faq';
+const Accordion = ({faqs}) => {
 
-    const toggleAccordion = () => {
-        setIsOpen(!isOpen);
+    const [isOpen, setIsOpen] = useState(1);
+    
+
+
+    
+    // console.log(faqs.faqs);
+
+    const toggleOpen = (id) => {
+        setIsOpen(isOpen === id ? null :id);
     };
+        // console.log(faqs);
     return (
         <div>
-            <div className="w-[400px] mx-auto my-5 py-2 border-2  ">
-                <div className="flex justify-between">
-                    <p>{question}</p>
-                    <button className="" onClick={toggleAccordion}>{isOpen ? '-' : '+'}</button>
-                </div>
-                {isOpen && (
-                    <div className=''>
-                        <p>{answer}</p>
-                    </div>
-                )}
-            </div>
+         {
+        faqs.map(faqItem =><Faq key={faqItem.id} faqItem={faqItem} onClick ={toggleOpen} isOpen = { isOpen === faqItem.id } /> )           
+        }
         </div>
     );
 };
