@@ -3,7 +3,7 @@ import { ProductContext } from './Context.API/ProductContext.jsx';
 
 const Form = () => {
     const [showTaxTinFields, setShowTaxTinFields] = useState(false);
-    const { productAdd } = useContext(ProductContext);
+    const { productAdd, productList } = useContext(ProductContext);
     const [product, setProduct] = useState({
         name: "",
         productImage: "",
@@ -16,7 +16,7 @@ const Form = () => {
         totalAmount: "",
         grandTotal: "",
     });
-    // console.log(product)
+    
 
     const handleCheckbox = (event) => {
         setShowTaxTinFields(event.target.checked);
@@ -24,7 +24,12 @@ const Form = () => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setProduct({...product, [name]: value,
+        setProduct({
+            ...product,
+            [name]: value,
+            totalAmount: name === 'price' || name === 'quantity' ? product.quantity * product.price : product.totalAmount,
+            taxAmount: showTaxTinFields ? product.quantity * product.price * 0.08 : 0,
+            grandTotal: product.quantity * product.price + (showTaxTinFields ? product.quantity * product.price * 0.08 : 0),
         });
     };
 
@@ -44,13 +49,43 @@ const Form = () => {
             grandTotal: "",
         });
     };
-    // console.log(handleSubmit)
+
+    const downloadcsv = () => {
+        const headers = [
+            "Product Name", "Image", "Price", "Quantity", "Variant", "Selling Date", "Tin Number", "Tax Amount", "Total Amount", "Grand Total"
+        ];
+
+        const csvRows = [
+            headers,
+            ...productList.map(product => [
+                product.name,
+                product.productImage,
+                product.price,
+                product.quantity,
+                product.variant,
+                product.sellingDate,
+                product.tinNumber,
+                product.taxAmount,
+                product.totalAmount,
+                product.grandTotal
+            ])
+        ];
+
+        const csvString = csvRows.map(row => row.join(",")).join("\n");
+        const blob = new Blob([csvString], { type: 'text/csv' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'products.csv';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 
     return (
         <form onSubmit={handleSubmit}>
             <div className="flex justify-end mt-8">
-                <button className="btn btn-outline btn-accent">Add Product</button>
-                <button className="btn btn-outline btn-accent mx-4">Show Report</button>
+                <button type="submit" className="btn btn-outline btn-accent">Add Product</button>
+                <button type="button" className="btn btn-outline btn-accent mx-4" onClick={downloadcsv}>Download CSV</button>
             </div>
             <div className="flex flex-col items-center justify-center">
                 <div>
@@ -69,18 +104,18 @@ const Form = () => {
                             value={product.name}
                             onChange={handleChange}
                             placeholder="Type here"
-                            className="input input-bordered w-full max-w-xs required:border-red-500 border-emerald-400"
+                            className="input input-bordered w-full max-w-xs border-emerald-400"
                         />
                     </div>
                     <div className="flex flex-col items-start space-y-2">
                         <label className="font-semibold">Product Image Url</label>
                         <input
-                            type="img"
+                            type="text"
                             name="productImage"
                             value={product.productImage}
                             onChange={handleChange}
                             placeholder="Product image Url"
-                            className="input input-bordered w-full max-w-xs required:border-red-500 border-emerald-400"
+                            className="input input-bordered w-full max-w-xs border-emerald-400"
                         />
                     </div>
                 </div>
@@ -93,7 +128,7 @@ const Form = () => {
                             value={product.price}
                             onChange={handleChange}
                             placeholder="Type here"
-                            className="input input-bordered w-full max-w-xs required:border-red-500 border-emerald-400"
+                            className="input input-bordered w-full max-w-xs border-emerald-400"
                         />
                     </div>
                     <div className="flex flex-col items-start space-y-2">
@@ -103,8 +138,8 @@ const Form = () => {
                             name="quantity"
                             value={product.quantity}
                             onChange={handleChange}
-                            placeholder="type here"
-                            className="input input-bordered w-full max-w-xs required:border-red-500 border-emerald-400"
+                            placeholder="Type here"
+                            className="input input-bordered w-full max-w-xs border-emerald-400"
                         />
                     </div>
                 </div>
@@ -130,8 +165,7 @@ const Form = () => {
                             name="sellingDate"
                             value={product.sellingDate}
                             onChange={handleChange}
-                            placeholder="Product Url"
-                            className="input input-bordered w-full max-w-xs required:border-red-500 border-emerald-400"
+                            className="input input-bordered w-full max-w-xs border-emerald-400"
                         />
                     </div>
                 </div>
@@ -180,25 +214,25 @@ const Form = () => {
                             name="totalAmount"
                             value={product.totalAmount}
                             onChange={handleChange}
-                            placeholder="Type here"
+                            readOnly
                             className="input input-bordered w-full max-w-xs border-emerald-400"
                         />
                     </div>
                     <div className="flex flex-col items-start space-y-2">
                         <label className="font-semibold">Grand Total</label>
                         <input
-                            type="text"
+                            type="number"
                             name="grandTotal"
                             value={product.grandTotal}
                             onChange={handleChange}
                             placeholder="grand total"
-                            className="input input-bordered w-full max-w-xs required:border-red-500 border-emerald-400"
+                            className="input input-bordered w-full max-w-xs border-emerald-400"
                         />
                     </div>
                 </div>
 
                 <div className='mt-8'>
-                    <button type="submit" onClick={handleSubmit} className="btn btn-outline border-emerald-400">Submit</button>
+                    <button type="submit" className="btn btn-outline border-emerald-400">Submit</button>
                 </div>
             </div>
         </form>
