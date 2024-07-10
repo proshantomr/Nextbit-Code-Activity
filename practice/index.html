@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        let tailwind;
+        tailwind.config = {
+            theme: {
+                extend: {
+
+                    colors: {
+                        clifford: '#da373d',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .parallax {
+                height: 100vh; /* Full height */
+                background-attachment: fixed; /* Parallax effect */
+            }
+
+            .custom-border {
+                border-top-left-radius: 40px;
+                border-top-right-radius: 40px;
+                border-bottom: none;
+                border-left: 1px solid white;
+                border-right: 1px solid white;
+                border-top: 1px solid white;
+                box-shadow: inset 0 0 20px 10px rgba(0, 66, 120, 0.6);
+
+            }
+            .grid-container {
+                display: grid;
+                grid-template-columns: auto auto auto auto auto auto auto auto auto;
+                grid-template-rows: fit-content(1px) auto;
+                gap: 0;
+                padding: 10px;
+                border-radius: 40px;
+
+                .grid-item {
+                    background-color: grey;
+                    border: 1px solid white;
+                    opacity: 20%;
+                    padding: 20px;
+                    font-size: 30px;
+                    text-align: center;
+                    height: 80px;
+
+
+                    .content-auto {
+                content-visibility: auto;
+                }
+                }
+
+
+
+                .grid-item1{
+                    background-color: grey;
+                    border: 1px solid white;
+                    opacity: 0.2;
+                    padding: 20px;
+                    font-size: 30px;
+                    text-align: center;
+                    height: 80px;
+                    border-top-left-radius: 20px;
+
+                }
+                .grid-item9{
+                    background-color: grey;
+                    border: 1px solid white;
+                    opacity: 0.2;
+                    padding: 20px;
+                    font-size: 30px;
+                    text-align: center;
+                    height: 80px;
+                    border-top-right-radius: 20px;
+                }
+                .grid-item27{
+                    background-color: grey;
+                    border: 1px solid white;
+                    opacity: 0.2;
+                    padding: 20px;
+                    font-size: 30px;
+                    text-align: center;
+                    height: 80px;
+                    border-bottom-left-radius: 20px;
+                }
+                .grid-item36{
+                    background-color: white;
+                    border: 1px solid white;
+                    opacity: 0.4;
+                    padding: 20px;
+                    font-size: 30px;
+                    text-align: center;
+                    height: 80px;
+                    border-bottom-right-radius: 20px;
+
+                }
+                .grid-item11{
+                    background-color: white;
+                    opacity: 0.4;
+                }
+                .grid-item24{
+                    background-color: white;
+                    opacity: 0.4;
+                }
+                .grid-item5{
+                    background-color: white;
+                    opacity: 0.4;
+                }
+                .grid-item8{
+                    background-color: white;
+                    opacity: 0.4;
+                }
+                .grid-item27{
+                    background-color: white;
+                    opacity: 0.4;
+                }
+                .grid-item31{
+                    background-color: white;
+                    opacity: 0.4;
+
+                }
+
+            }
+        }
+    </style>
+    <title></title>
+
+</head>
+<body>
+<div class="relative h-screen" >
+    <img  class=" background-image flex w-full h-full object-cover absolute inset-0 bg-fixed " src="./img/Background.jpg" alt="Background Image">
+
+    <nav class="absolute top-0 left-0 right-0  bg-transparent p-4 flex justify-between items-center z-10 border-b">
+        <div class="text-white text-lg font-bold">
+            NextBit Studio
+        </div>
+
+        <div class="flex md:hidden">
+            <button id="menu-toggle" class="text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <ul id="menu" class="hidden md:flex space-x-6 cursor-pointer text-white">
+            <li class="hover:bg-gray-600 hover:text-white p-2 rounded">Home</li>
+            <li class="hover:bg-gray-600 hover:text-white p-2 rounded">About</li>
+            <li class="hover:bg-gray-600 hover:text-white p-2 rounded">Contact</li>
+        </ul>
+
+        <div class="hidden md:flex items-center">
+            <label>
+                <input type="search" placeholder="Search here" class="py-2 px-3 rounded outline-black text-black bg-white">
+            </label>
+            <button onclick="search" class="btn btn-outline neutral-content text-white py-2 ml-2">Search</button>
+        </div>
+    </nav>
+
+    <!-- Responsive Menu Dropdown -->
+    <div id="menu-dropdown" class="md:hidden absolute top-16 left-0 right-0 bg-gray-100 bg-opacity-30  z-20 hidden ">
+        <ul class="flex flex-col space-y-2 ">
+            <li class="text-white p-2 hover:bg-gray-200 hover:bg-opacity-30 ">Home</li>
+            <li class="text-white p-2 hover:bg-gray-200 hover:bg-opacity-30 ">About</li>
+            <li class="text-white p-2 hover:bg-gray-200 hover:bg-opacity-30">Contact</li>
+        </ul>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="relative h-full flex items-center justify-center bg-black bg-opacity-30">
+        <div class="text-center text-white px-4">
+            <h1 class="text-3xl md:text-6xl font-bold  ">Welcome to NextBit Studio</h1>
+            <p class="mt-4 text-base md:text-xl">Without Coding Life is Nothing</p>
+        </div>
+    </div>
+</div>
+
+<div class="mx-auto w-full overflow-y-scroll bg-cover bg-bottom bg-no-repeat shadow-lg parallax"
+     style="background-image: url('https://t3.ftcdn.net/jpg/01/34/53/74/360_F_134537443_VendrqyXIWyHrZgxdIsfyKUost734JDP.jpg');">
+    <div class="container mx-auto mt-20 p-4 sm:p-8 ">
+        <div class="font-serif text-2xl text-base italic text-white">
+           <h2 class="text-4xl">About us</h2>
+        </div>
+        <div
+                class="mt-1 font-serif text-base text-sm font-medium italic  text-white">
+            Adventure calls, conquer mountain trails.
+        </div>
+        <div class="text-white text-justify " >
+            <p class="">
+            He went to Durham Grammar School, was articled to a solicitor in Newcastle at seventeen, moved to another firm in London at twenty …
+            He went to Durham Grammar School, was articled to a solicitor in Newcastle at seventeen, moved to another firm in London at twenty …
+            He went to Durham Grammar School, was articled to a solicitor in Newcastle at seventeen, moved to another firm in London at twenty …
+            He went to Durham Grammar School, was articled to a solicitor in Newcastle at seventeen, moved to another firm in London at twenty …
+            He went to Durham Grammar School, was articled to a solicitor in Newcastle at seventeen, moved to another firm in London at twenty …
+            He went to Durham Grammar School, was articled to a solicitor in Newcastle at seventeen, moved to another firm in London at twenty …
+            citor in Newcastle at seventeen, moved to another firm in London at twenty …
+            He went to Durham Grammar School, was articled to a solicitor in Newcastle at seventeen, moved to another firm in London at
+            He went to Durham Grammar School, was articled to a solicitor in Newcastle at seventeen, moved to another firm in London at twenty …
+            He went to Durham Grammar School, was articled to a solicitor in Newcastle at seventeen, moved to another firm in London at twenty …
+            He went to Durham Grammar School, was articled to a solicitor in Newcastle at seventeen, moved to another firm in London at twenty …
+            He went to Durham Grammar School, was articled to a solicitor in Newcastle at seventeen, moved to another firm in London at twenty …
+            He went to Durham Grammar School, was articled to a solicitor in Newcastle at seventeen, moved to another firm in London at twenty …
+            He went to Durham Grammar School, was articled to a solicitor in Newcastle at seventeen, moved to another firm in London at twenty …
+            </p>
+        </div>
+
+      <div class="mt-6">
+          <h2 class="text-2xl text-white font-bold" >Build a Glassmorphic Navbar with TailwindCSS backdrop-filter & backdrop-blur</h2>
+
+          <img class=" w-full h-90 mt-4 rounded-lg " src="https://carrd.co/assets/public/ND/cw/Mj/I2/NDcwMjI2NWZhMmRhNTU2ZTQzODZhYmYwYzFjMmJlOTg.jpg?v=ecd8a4d5ca1d78eda42f3b372f2ec1b5" alt="">
+      </div>
+
+        <div class="mt-6">
+            <h2 class="text-2xl text-white font-bold" >TailwindCSS v2.1 and the new backdrop utility classes</h2>
+            <p class="text-white">CSS filters weren’t supported by Tailwind in the past but with the release of v2.1, a bunch of handy utility classes are now available for us to use, including the new backdrop-filter classes!
+
+                In order to achieve the glassmorphic effect on the navbar, we only need to utilize the backdrop-filter and backdrop-blur utility classes, and adjust the opacity a bit. It's dead simple!
+
+                Before moving forward, make sure you have Tailwind v2.1 installed!</p>
+        </div>
+
+        <div class="mt-6">
+            <h2 class="text-2xl text-white font-bold" >The basic structure of the Navbar</h2>
+            <p class="text-white mt-4">Let’s start by using the ‘nav’ semantic element and populating it with a few items.!</p>
+            <img class=" w-100 h-90 mt-4 rounded-lg " src="https://4.bp.blogspot.com/-VwqfWFnip4k/WiaoKBe3exI/AAAAAAAAE6E/ZqK7QjHHxhoaPO-LC2MAwLrm5QR0MJToQCLcBGAs/s1600/8.png" alt="">
+        </div>
+
+        <div class="mt-6 ">
+            <h2 class="text-2xl text-white font-bold" >The basic structure of the Navbar</h2>
+            <p class="text-white mt-4">Let’s start by using the ‘nav’ semantic element and populating it with a few items.!</p>
+            <img class=" w-90 h-90 mt-4 rounded-lg " src="https://htmljstemplates.com/static_files/images/html/navbar-bottom.jpg" alt="">
+        </div>
+
+        <div class="grid my-8 p-10 grid-cols-1 md:grid-cols-2 mx-4 ">
+            <div>
+                <h1 class="text-white text-4xl">Subscribe to my newsletter</h1>
+                <p class="text-white text-xl mt-4 ">A periodic update about my life, recent blog posts, how-tos, and discoveries.</p>
+                <div class="relative mt-4">
+                    <label for="email"></label><input type="email" id="email" class="block w-full p-4 pr-32 text-sm text-gray-900 border border-gray-300 bg-opacity-30 rounded-3xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example@gmail.com" required />
+                    <button type="submit" class="absolute inset-y-0 right-0 px-4 py-2 text-sm font-medium text-white bg-gray-200 bg-opacity-30 rounded-3xl hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Subscribe</button>
+                </div>
+            </div>
+            <div class="mx-8 mt-4">
+                <img class="w-8 " src="https://cdn-icons-png.flaticon.com/128/542/542689.png" alt="">
+                <p class="text-white ">No Spam</p>
+                <p class="text-white text-xl ">I never send spam.<br> And you can unsubscribe at<br> any time!</p>
+            </div>
+        </div>
+
+
+
+        <div class=" custom-border w-full   border-4 border relative my-5  py-2" >
+            <div class="grid-container grid  lg:w-50 " >
+                <div class="grid-item1"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item5"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item8"></div>
+                <div class="grid-item9"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item11"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item24"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item27"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item31"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item36"></div>
+            </div>
+
+            <div class="absolute  grid grid-cols-1 md:grid-cols-4 top-0 left-0 w-full h-full flex lace-items-start  ">
+                <div class="text-white ">
+                   <img class="h-12 w-12 mx-20 mt-10 " src="/img/Logo.png" alt="">
+                    <p class=" mx-20 mt-5 " >I’m Braydon - a senior front-end developer. Thanks for checking out my site!</p>
+                    <div class="flex space-x-4 mx-20 mt-2">
+                        <img class="h-8 w-8" src="https://cdn-icons-png.flaticon.com/128/3665/3665178.png" alt="Icon 1">
+                        <img class="h-8 w-8" src="https://cdn-icons-png.flaticon.com/128/3670/3670157.png" alt="Icon 2">
+                        <img class="h-8 w-8" src="https://cdn-icons-png.flaticon.com/128/2504/2504923.png" alt="Icon 3">
+                    </div>
+                    <p class="mt-5 mx-20">© 2024 Braydon Coyer</p>
+                </div>
+                <div class="text-center text-white mt-10 ">
+                    <h1>GENERAL</h1>
+                    <ul class="mt-5">
+                        <li class="mt-2 cursor-pointer hover:font-bold">Home</li>
+                        <li class="mt-2 hover:font-bold">About</li>
+                        <li class="mt-2 hover:font-bold">Project</li>
+                        <li class="mt-2 hover:font-bold">Blog</li>
+                    </ul>
+                </div>
+                <div class="text-center text-white mt-10 ">
+                    <h1>SPECIFICS</h1>
+                    <ul class="mt-5">
+                        <li class="mt-2 cursor-pointer hover:font-bold">Toolbox</li>
+                        <li class="mt-2 cursor-pointer hover:font-bold">Speaking</li>
+                        <li class="mt-2 cursor-pointer hover:font-bold">Product</li>
+                        <li class="mt-2 cursor-pointer hover:font-bold">Start <strong>SOON</strong> </li>
+                        <li class="mt-2 cursor-pointer hover:font-bold">Community Wall <strong>SOON</strong> </li>
+                    </ul>
+                </div>
+                <div class="text-center text-white mt-10 ">
+                    <h1>EXTRA</h1>
+                    <ul class="mt-5">
+                        <li class="mt-2 cursor-pointer hover:font-bold">Changelog</li>
+                        <li class="mt-2 cursor-pointer hover:font-bold">Connection</li>
+                        <li class="mt-2 cursor-pointer hover:font-bold">Resume</li>
+                        <li class="mt-2 cursor-pointer hover:font-bold">Snippets</li>
+                        <li class="mt-2 cursor-pointer hover:font-bold">Community Wall</li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        <script>
+    // Toggle mobile menu visibility
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+        document.getElementById('menu-dropdown').classList.toggle('hidden');
+    });
+</script>
+
+</body>
+</html>
